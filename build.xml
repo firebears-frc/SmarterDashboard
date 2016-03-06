@@ -1,0 +1,40 @@
+<project>
+
+	<path id="3rd-party-classpath">
+		<fileset dir="lib">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+
+	<target name="clean">
+		<delete dir="build"/>
+	</target>
+
+	<target name="compile">
+		<mkdir dir="build/classes"/>
+		<javac srcdir="src" destdir="build/classes">
+			<classpath refid="3rd-party-classpath" />
+		</javac>
+	</target>
+
+	<target name="jar">
+		<mkdir dir="build/jar"/>
+		<jar destfile="build/jar/SmarterDashboard.jar" basedir="build/classes">
+			<manifest>
+				<attribute name="Main-Class" value="SmarterDashboard.src.main"/>
+				<attribute name="Class-path" value="NetworkTables.jar,jcommon-1.0.23.jar,jfreechart-1.0.19.jar"/>
+			</manifest>
+		</jar>
+	</target>
+
+	<target name="run">
+		<java jar="build/jar/SmarterDashboard.jar" fork="true"/>
+	</target>
+
+	<target name="build">
+		<antcall target="compile"/>
+		<antcall target="jar"/>
+		<antcall target="run"/>
+	</target>
+
+</project>
