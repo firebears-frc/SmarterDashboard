@@ -6,7 +6,6 @@ import SmarterDashboard.src.gui.elements.bindings.AbstractTableWidget;
 import SmarterDashboard.src.properties.Property;
 import SmarterDashboard.src.types.DataType;
 import SmarterDashboard.src.types.named.LWSubsystemType;
-import SmarterDashboard.src.xml.SmartDashboardXMLReader;
 import edu.wpi.first.wpilibj.tables.ITable;
 import edu.wpi.first.wpilibj.tables.ITableListener;
 import java.awt.Component;
@@ -53,7 +52,6 @@ public class LWSubsystem extends AbstractTableWidget {
     /**
      * Responsible for reading data from a save file.
      */
-    private static SmartDashboardXMLReader reader;
 
     public LWSubsystem() {
         super(true);//listen for sub tables
@@ -119,9 +117,6 @@ public class LWSubsystem extends AbstractTableWidget {
     @Override
     public void tableChanged(ITable source, final String key, final ITable table, boolean isNew) {
         boolean alreadyHasWidget = false;
-        if (reader != null) {
-            alreadyHasWidget = reader.containsWidgetOfName(this, key);
-        }
 
         if (!alreadyHasWidget) {
             table.addTableListenerEx("~TYPE~", new ITableListener() {
@@ -135,15 +130,6 @@ public class LWSubsystem extends AbstractTableWidget {
                 }
             }, ITable.NOTIFY_IMMEDIATE | ITable.NOTIFY_LOCAL | ITable.NOTIFY_NEW | ITable.NOTIFY_UPDATE);
         }
-    }
-
-    /**
-     * Sets the reader responsible for loading a save file.
-     *
-     * @param XMLreader
-     */
-    public static void setLoaded(SmartDashboardXMLReader XMLreader) {
-        reader = XMLreader;
     }
 
     @Override

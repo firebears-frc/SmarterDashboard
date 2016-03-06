@@ -10,7 +10,7 @@ import SmarterDashboard.src.properties.*;
 import SmarterDashboard.src.robot.*;
 
 /**
- * main SmartDashboard logic
+ * main SmarterDashboard logic
  *
  * @author Joe Grinstead
  * @author pmalmsten
@@ -23,7 +23,7 @@ public class main {
     /**
      * Returns whether or not this is in "competition" mode. Competition mode
      * should be used on the netbook provided for teams to use the dashboard. If
-     * the SmartDashboard is in competition mode, then it automatically sizes
+     * the SmarterDashboard is in competition mode, then it automatically sizes
      * itself to be the standard dashboard size and to remove the frame around
      * it. It can be set to be in competition if "competition" is one of the
      * words passed in through the command line.
@@ -41,7 +41,7 @@ public class main {
      *
      * @param args
      *            the standard arguments. If "competition" is one of them, then
-     *            the SmartDashboard will be in competition mode
+     *            the SmarterDashboard will be in competition mode
      * @see main#inCompetition() inCompetition()
      */
     public static void main(final String[] args) {
@@ -58,7 +58,7 @@ public class main {
         }
 
         // Present a loading bar (it will only show up if this is going slowly)
-        final ProgressMonitor monitor = new ProgressMonitor(null, "Loading SmartDashboard", "Initializing internal code...", 0, 1000);
+        final ProgressMonitor monitor = new ProgressMonitor(null, "Loading SmarterDashboard", "Initializing internal code...", 0, 1000);
 
         // Search the filesystem for extensions (49%)
         FileSniffer.findExtensions(monitor, 0, 490);
@@ -116,14 +116,6 @@ public class main {
                         frame.setVisible(true);
 
                         monitor.setProgress(750);
-                        monitor.setNote("Loading From Save");
-
-                        // Load
-                        File file = new File(frame.getPrefs().saveFile.getValue());
-                        if (file.exists()) {
-                            frame.load(file.getPath());
-                        }
-
                         monitor.setProgress(1000);
 
                     } catch (Exception e) {

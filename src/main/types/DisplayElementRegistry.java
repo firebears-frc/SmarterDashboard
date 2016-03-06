@@ -32,8 +32,9 @@ public class DisplayElementRegistry {
 
 	/**
 	 * Forces the DisplayElementRegistry to register all widgets and types
-	 * supplied in SmartDashboard. This method does <b>not</b> read through the
-	 * file system to find extensions, that is done by {@link FileSniffer}.
+	 * supplied in SmarterDashboard. This method does <b>not</b> read
+	 * through the file system to find extensions, that is done by
+	 * {@link FileSniffer}.
 	 */
 	static{
 		DefaultDisplayElementRegistrar.init();

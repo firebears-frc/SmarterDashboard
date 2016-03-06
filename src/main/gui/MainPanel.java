@@ -11,7 +11,7 @@ import java.util.HashMap;
 import javax.swing.JPanel;
 
 /**
- * Contains the DashboardPanels of the SmartDashboard and
+ * Contains the DashboardPanels of the SmarterDashboard and
  * gives functionality to swap between them.
  * @author Sam
  */

@@ -14,14 +14,6 @@ import java.io.File;
  * @author brad
  */
 public class DashboardPrefs implements PropertyHolder {
-	private static final File USER_HOME = new File(System.getProperty("user.home"));
-	private static final File USER_SMARTDASHBOARD_HOME = new File(USER_HOME, "SmartDashboard");
-	static{
-		if(!USER_SMARTDASHBOARD_HOME.exists()){
-			USER_SMARTDASHBOARD_HOME.mkdirs();
-		}
-	}
-
 	private Map<String, Property> properties = new LinkedHashMap<String, Property>();
 	public final IntegerProperty team = new IntegerProperty(this, "Team Number", 0);
 	public final BooleanProperty usemDNS = new BooleanProperty(this, "Use mDNS (supported on roboRIO)", true);
@@ -33,9 +25,7 @@ public class DashboardPrefs implements PropertyHolder {
 	public final IntegerProperty y = new IntegerProperty(this, "Window Y Position", 0);
 	public final IntegerProperty width = new IntegerProperty(this, "Window Width", 640);
 	public final IntegerProperty height = new IntegerProperty(this, "Window Height", 480);
-	public final FileProperty saveFile = new FileProperty(this, "Save File", new File(USER_SMARTDASHBOARD_HOME, "save.xml").getAbsolutePath());
 	public final BooleanProperty logToCSV = new BooleanProperty(this, "Log to CSV", false);
-	public final FileProperty csvFile = new FileProperty(this, "CSV File", new File(USER_SMARTDASHBOARD_HOME, "csv.txt").getAbsolutePath());
 	private Preferences node;
 	
 		
@@ -82,7 +72,7 @@ public class DashboardPrefs implements PropertyHolder {
 			}
 		} else if (property == logToCSV) {
 			if ((Boolean) value) {
-				int result = JOptionPane.showOptionDialog(null, "Should SmartDashboard start logging to the CSV file? (This will override the existing file)",
+				int result = JOptionPane.showOptionDialog(null, "Should SmarterDashboard start logging to the CSV file? (This will override the existing file)",
 						"Warning", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, null, false);
 				return result == JOptionPane.YES_OPTION;
 			}
@@ -103,17 +93,11 @@ public class DashboardPrefs implements PropertyHolder {
 			frame.setSize(frame.getWidth(), height.getValue());
 		} else if (property == team) {
 			Robot.setTeam(team.getValue());
-			frame.setTitle("SmartDashboard - " + team.getValue());
+			frame.setTitle("SmarterDashboard - " + team.getValue());
 		} else if (property == usemDNS) {
 			Robot.setUseMDNS(usemDNS.getValue());
 		} else if (property == hideMenu) {
 			frame.setShouldHideMenu(hideMenu.getValue());
-		} else if (property == logToCSV) {
-			if (logToCSV.getValue()) {
-				frame.getLogger().start(csvFile.getValue());
-			} else {
-				frame.getLogger().stop();
-			}
 		}
 	}
 }

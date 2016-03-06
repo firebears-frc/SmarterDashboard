@@ -9,7 +9,7 @@ import java.util.Map;
 
 /**
  * This interface defines methods that allow an object to use the standard
- * property mechanism used in the SmartDashboard project.
+ * property mechanism used in the SmarterDashboard project.
  *
  * The system is designed to make the necessary coding for an extension developer
  * quite small.
