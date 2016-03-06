@@ -1,7 +1,7 @@
 <project>
 
 	<path id="3rd-party-classpath">
-		<fileset dir="lib">
+		<fileset dir="">
 			<include name="*.jar" />
 		</fileset>
 	</path>
@@ -21,7 +21,7 @@
 		<mkdir dir="build/jar"/>
 		<jar destfile="build/jar/SmarterDashboard.jar" basedir="build/classes">
 			<manifest>
-				<attribute name="Main-Class" value="SmarterDashboard.src.main"/>
+				<attribute name="Main-Class" value="SmarterDashboard.Main"/>
 				<attribute name="Class-path" value="NetworkTables.jar,jcommon-1.0.23.jar,jfreechart-1.0.19.jar"/>
 			</manifest>
 		</jar>

@@ -1,7 +1,5 @@
 package SmarterDashboard;
 
-import java.io.*;
-
 import javax.swing.*;
 
 import SmarterDashboard.extensions.*;
@@ -15,7 +13,7 @@ import SmarterDashboard.robot.*;
  * @author Joe Grinstead
  * @author pmalmsten
  */
-public class main {
+public class Main {
 
 	/** Variable used in the {@link main#inCompetition() inCompetition()} method */
 	private static boolean inCompetition = false;

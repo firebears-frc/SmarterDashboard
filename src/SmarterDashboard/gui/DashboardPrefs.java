@@ -4,7 +4,7 @@ import java.util.*;
 import java.util.prefs.*;
 import javax.swing.*;
 
-import SmarterDashboard.main;
+import SmarterDashboard.Main;
 import SmarterDashboard.properties.*;
 import SmarterDashboard.robot.*;
 
@@ -37,7 +37,7 @@ public class DashboardPrefs implements PropertyHolder {
 	private final DashboardFrame frame;
 	public DashboardPrefs(DashboardFrame frame) {
 		this.frame = frame;
-		node = Preferences.userNodeForPackage(main.class);
+		node = Preferences.userNodeForPackage(Main.class);
 
 		for (Property property : properties.values()) {
 			if (property == logToCSV) {//always set logtoCSV to default on load

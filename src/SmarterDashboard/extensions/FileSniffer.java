@@ -27,7 +27,7 @@ import SmarterDashboard.types.*;
  */
 public class FileSniffer {
 	private static final File[] LIBRARY_DIRS = {
-			new File("./lib"),
+			new File("."),
 	};
 	private static final String LIB_LOAD_MSGE =
 		"Searching for library jars in: ";

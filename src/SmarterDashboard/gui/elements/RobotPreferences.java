@@ -6,12 +6,9 @@ import java.util.*;
 
 import javax.swing.*;
 import javax.swing.table.*;
-import org.jfree.ui.ExtensionFileFilter;
-
 import SmarterDashboard.gui.*;
 import SmarterDashboard.properties.*;
 import SmarterDashboard.robot.Robot;
-import edu.wpi.first.wpilibj.networktables.*;
 import edu.wpi.first.wpilibj.tables.*;
 
 /**
@@ -20,6 +17,10 @@ import edu.wpi.first.wpilibj.tables.*;
  */
 public class RobotPreferences extends StaticWidget implements ITableListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public static final String NAME = "Robot Preferences";
 	private JTable table;
 	private PreferenceTableModel model;
@@ -276,6 +277,11 @@ public class RobotPreferences extends StaticWidget implements ITableListener {
 	}
 
 	private class PreferenceTableModel extends AbstractTableModel {
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 
 		public int getRowCount() {
 			return values.size();
@@ -554,6 +560,10 @@ public class RobotPreferences extends StaticWidget implements ITableListener {
 
 	private class NewPreferenceEntryDialog extends JDialog {
 
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 		private JTextField keyField;
 		private JComboBox<String> typeComboBox;
 		private JTextField valueField;
