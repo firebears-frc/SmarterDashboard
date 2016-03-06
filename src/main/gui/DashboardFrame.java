@@ -59,21 +59,21 @@ public class DashboardFrame extends JFrame {
 	private final PropertyEditor propEditor;
 	/** Whether or not the menu bar should be hidden */
 	private boolean shouldHideMenu = prefs.hideMenu.getValue();
-    
-    private static final String LW_SAVE = "_"+Robot.getLiveWindow().getSubTable("~STATUS~").getString("Robot", PANEL_LIVE_WINDOW)+".xml";
+	
+	private static final String LW_SAVE = "_"+Robot.getLiveWindow().getSubTable("~STATUS~").getString("Robot", PANEL_LIVE_WINDOW)+".xml";
 	
 	private final LogToCSV logger = new LogToCSV(this);
-         
-        private static DashboardFrame INSTANCE = null;
-        public static DashboardFrame getInstance(){
-            return INSTANCE;
-        }
+		 
+		private static DashboardFrame INSTANCE = null;
+		public static DashboardFrame getInstance(){
+			return INSTANCE;
+		}
 
 	/**
 	 * Initializes the frame.
 	 * 
 	 * @param competition
-	 *            whether or not to display as though it were on the netbook
+	 *			whether or not to display as though it were on the netbook
 	 */
 	public DashboardFrame(boolean competition) {
 		super(PANEL_SMARTER_DASHBOARD + " - ");
@@ -82,13 +82,13 @@ public class DashboardFrame extends JFrame {
 
 		// The content of the frame is really contained in the panel and menu
 		smarterDashboardPanel = new DashboardPanel(this, Robot.getTable());
-        smarterDashboardPanel.setName(PANEL_SMARTER_DASHBOARD);
-        liveWindowPanel = new DashboardPanel(this, Robot.getLiveWindow());
-        liveWindowPanel.setName(PANEL_LIVE_WINDOW);
-        mainPanel = new MainPanel(new CardLayout(), smarterDashboardPanel, liveWindowPanel, smarterDashboardPanel);
-        mainPanel.add(smarterDashboardPanel, DisplayMode.SMARTER_DASHBOARD.toString());
-        mainPanel.add(liveWindowPanel, DisplayMode.LIVE_WINDOW.toString());
-        setDisplayMode(DisplayMode.SMARTER_DASHBOARD);
+		smarterDashboardPanel.setName(PANEL_SMARTER_DASHBOARD);
+		liveWindowPanel = new DashboardPanel(this, Robot.getLiveWindow());
+		liveWindowPanel.setName(PANEL_LIVE_WINDOW);
+		mainPanel = new MainPanel(new CardLayout(), smarterDashboardPanel, liveWindowPanel, smarterDashboardPanel);
+		mainPanel.add(smarterDashboardPanel, DisplayMode.SMARTER_DASHBOARD.toString());
+		mainPanel.add(liveWindowPanel, DisplayMode.LIVE_WINDOW.toString());
+		setDisplayMode(DisplayMode.SMARTER_DASHBOARD);
 		menuBar = new DashboardMenu(this, mainPanel);
 		propEditor = new PropertyEditor(this);
 
@@ -163,19 +163,21 @@ public class DashboardFrame extends JFrame {
 			public void componentHidden(ComponentEvent e) {
 			}
 		});
-                
-                INSTANCE = this;//will only be instanciated once so make this a singleton so plugins can get it for compatability
+
+		// will only be instanciated once so make this a singleton so
+		// plugins can get it for compatability
+		INSTANCE = this;
 	}
-    
-    /**
-     * Sets the current DisplayMode to the given mode.
-     * @param mode The mode to put the frame into.
-     */
-    public final void setDisplayMode(DisplayMode mode) {
-        displayMode = mode;
-        CardLayout cl = (CardLayout)(mainPanel.getLayout());
-        cl.show(mainPanel, mode.toString());
-    }
+	
+	/**
+	 * Sets the current DisplayMode to the given mode.
+	 * @param mode The mode to put the frame into.
+	 */
+	public final void setDisplayMode(DisplayMode mode) {
+		displayMode = mode;
+		CardLayout cl = (CardLayout)(mainPanel.getLayout());
+		cl.show(mainPanel, mode.toString());
+	}
 
 	/**
 	 * Returns the property editor
@@ -192,7 +194,7 @@ public class DashboardFrame extends JFrame {
 	 * this.
 	 * 
 	 * @param shouldHide
-	 *            whether or not the menu should hide
+	 *			whether or not the menu should hide
 	 */
 	public void setShouldHideMenu(boolean shouldHide) {
 		if (shouldHideMenu != shouldHide) {
@@ -210,12 +212,13 @@ public class DashboardFrame extends JFrame {
 	 * Exits the program, prompting the user to quit.
 	 */
 	public void exit() {
-		int result = JOptionPane.showConfirmDialog(this, new String[] { "Do you want to quit?" }, "Quit?",
-				JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+		int result = JOptionPane.showConfirmDialog(this,
+			"Do you want to quit?", "Quit?",
+			JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 		switch (result) {
-		case JOptionPane.YES_OPTION:
-			System.exit(0);
-		default: // Do Nothing (they called cancel)
+			case JOptionPane.YES_OPTION:
+				System.exit(0);
+			default: // Do Nothing (they pressed no)
 		}
 	}
 
