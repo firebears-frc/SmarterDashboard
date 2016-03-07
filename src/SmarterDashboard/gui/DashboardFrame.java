@@ -57,8 +57,6 @@ public class DashboardFrame extends JFrame {
 	private final JMenuBar menuBar;
 	/** The property table (there is only this one ever) */
 	private final PropertyEditor propEditor;
-	/** Whether or not the menu bar should be hidden */
-	private boolean shouldHideMenu = prefs.hideMenu.getValue();
 	
 	private static final String LW_SAVE = "_"+Robot.getLiveWindow().getSubTable("~STATUS~").getString("Robot", PANEL_LIVE_WINDOW)+".xml";
 	
@@ -92,32 +90,8 @@ public class DashboardFrame extends JFrame {
 		menuBar = new DashboardMenu(this, mainPanel);
 		propEditor = new PropertyEditor(this);
 
-		if (!shouldHideMenu) {
-			add(menuBar, BorderLayout.NORTH);
-		}
+		add(menuBar, BorderLayout.NORTH);
 		add(mainPanel, BorderLayout.CENTER);
-
-		// Look for when the menu bar should be displayed
-		MouseAdapter hideListener = new MouseAdapter() {
-
-			@Override
-			public void mouseMoved(MouseEvent e) {
-				if (shouldHideMenu && e.getY() < MENU_HEADER) {
-					add(menuBar, BorderLayout.NORTH);
-					validate();
-				}
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				if (shouldHideMenu) {
-					remove(menuBar);
-					validate();
-				}
-			}
-		};
-		smarterDashboardPanel.addMouseListener(hideListener);
-		smarterDashboardPanel.addMouseMotionListener(hideListener);
 
 		// Set the size / look
 		if (competition) {
@@ -186,26 +160,6 @@ public class DashboardFrame extends JFrame {
 	 */
 	public PropertyEditor getPropertyEditor() {
 		return propEditor;
-	}
-
-	/**
-	 * Sets whether or not the menu should be hidden. This does not attempt to
-	 * change the property setting, instead the property setting should call
-	 * this.
-	 * 
-	 * @param shouldHide
-	 *			whether or not the menu should hide
-	 */
-	public void setShouldHideMenu(boolean shouldHide) {
-		if (shouldHideMenu != shouldHide) {
-			shouldHideMenu = shouldHide;
-			if (shouldHideMenu) {
-				remove(menuBar);
-			} else {
-				add(menuBar, BorderLayout.NORTH);
-			}
-			validate();
-		}
 	}
 
 	/**

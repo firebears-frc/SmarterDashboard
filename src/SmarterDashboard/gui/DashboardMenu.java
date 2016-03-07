@@ -26,7 +26,10 @@ import SmarterDashboard.types.DisplayElementRegistry;
  */
 public class DashboardMenu extends JMenuBar {
 
-
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -9127806794220049636L;
 
 	/**
 	 * Creates a menu for the given panel.
@@ -66,16 +69,6 @@ public class DashboardMenu extends JMenuBar {
 		fileMenu.add(exitMenu);
 
 		JMenu viewMenu = new JMenu("View");
-		final JCheckBoxMenuItem editMode = new JCheckBoxMenuItem("Editable");
-		editMode.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				for (DashboardPanel panel : MainPanel.panels.values()) {
-					panel.setEditable(!panel.isEditable());
-				}
-			}
-		});
-		editMode.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, KeyEvent.CTRL_DOWN_MASK));
-		viewMenu.add(editMode);
 
 		JCheckBoxMenuItem editSystems = new JCheckBoxMenuItem("Edit Subsystems");
 		editSystems.addActionListener(new ActionListener() {
@@ -155,6 +148,11 @@ public class DashboardMenu extends JMenuBar {
 					if (mainPanel.getPanel(DashboardFrame.PANEL_SMARTER_DASHBOARD).getTable().containsKey(field)) {
 						count++;
 						revealMenu.add(new JMenuItem(new AbstractAction(field) {
+							/**
+							 * 
+							 */
+							private static final long serialVersionUID = 4297567226439305055L;
+
 							public void actionPerformed(ActionEvent e) {
 								mainPanel.getPanel(DashboardFrame.PANEL_SMARTER_DASHBOARD).addField(field);
 							}

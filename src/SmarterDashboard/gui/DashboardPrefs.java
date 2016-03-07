@@ -8,8 +8,6 @@ import SmarterDashboard.Main;
 import SmarterDashboard.properties.*;
 import SmarterDashboard.robot.*;
 
-import java.io.File;
-
 /**
  * 
  * @author brad
@@ -18,7 +16,6 @@ public class DashboardPrefs implements PropertyHolder {
 	private Map<String, Property> properties = new LinkedHashMap<String, Property>();
 	public final IntegerProperty team = new IntegerProperty(this, "Team Number", 0);
 	public final BooleanProperty usemDNS = new BooleanProperty(this, "Use mDNS (supported on roboRIO)", true);
-	public final BooleanProperty hideMenu = new BooleanProperty(this, "Hide Menu", false);
 	public final BooleanProperty autoShowWidgets = new BooleanProperty(this, "Automatically Show Widgets", true);
 	public final IntegerListProperty grid_widths = new IntegerListProperty(this, "Grid Cell Width(s)", new int[] { 16 });
 	public final IntegerListProperty grid_heights = new IntegerListProperty(this, "Grid Cell Height(s)", new int[] { 16 });
@@ -97,8 +94,6 @@ public class DashboardPrefs implements PropertyHolder {
 			frame.setTitle("SmarterDashboard - " + team.getValue());
 		} else if (property == usemDNS) {
 			Robot.setUseMDNS(usemDNS.getValue());
-		} else if (property == hideMenu) {
-			frame.setShouldHideMenu(hideMenu.getValue());
 		}
 	}
 }

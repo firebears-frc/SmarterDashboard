@@ -21,13 +21,17 @@ import edu.wpi.first.wpilibj.tables.*;
 public class DashboardPanel extends JPanel {
 
 	/**
-	 * We use a glass pane technique for editable mode
+	 * 
 	 */
-	private GlassPane glassPane;
+	private static final long serialVersionUID = 1L;
+	/**
+	 * This panel is everything inside of the scrolling pane
+	 */
+	private JPanel insidePane;
 	/**
 	 * This panel contains everything except the glass pane
 	 */
-	private JPanel backPane = new JPanel();
+	private JScrollPane scrollPanel;
 	/**
 	 * All the elements currently being displayed
 	 */
@@ -41,16 +45,17 @@ public class DashboardPanel extends JPanel {
 	 */
 	private Set<String> hiddenFields = new HashSet<String>();
 	/**
-	 * Whether or not this is editable
-	 */
-	private boolean editable = false;
-	/**
 	 * The listener which connects the panel to keep up to date on the robot
 	 */
 	private final RobotListener listener = new RobotListener();
 	private final ArrayList<LWSubsystem> subsystems = new ArrayList<LWSubsystem>();
 	private final DashboardFrame frame;
 	private final ITable table;
+	
+	/**
+	 * Where the next object should go when it is initialized.
+	 */
+	public int objectnexty = 0;
 
 	/**
 	 * Instantiates the panel
@@ -58,16 +63,19 @@ public class DashboardPanel extends JPanel {
 	public DashboardPanel(DashboardFrame frame, ITable table) {
 		this.frame = frame;
 		this.table = table;
-		glassPane = new GlassPane(frame, this);
-		add(glassPane);
-		add(backPane);
+		//glassPane = new GlassPane(frame, this);
+		//add(glassPane);
 
-		backPane.setLayout(new DashboardLayout());
-		backPane.setFocusable(true);
+		insidePane = new JPanel();
+		insidePane.setLayout(new DashboardLayout());
+		insidePane.setFocusable(true);
+		
+		// Create the Scrolling Panel with backPane inside.
+		scrollPanel = new JScrollPane(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPanel.getViewport().add(insidePane);
+		add(scrollPanel, BorderLayout.CENTER);
 
 		setLayout(new DashboardLayout());
-
-		setEditable(editable);
 
 		table.addTableListenerEx(listener, ITable.NOTIFY_IMMEDIATE | ITable.NOTIFY_LOCAL | ITable.NOTIFY_NEW | ITable.NOTIFY_UPDATE);
 		table.addSubTableListener(listener, true);
@@ -79,45 +87,19 @@ public class DashboardPanel extends JPanel {
 
 	@Override
 	public synchronized void addMouseListener(MouseListener l) {
-		glassPane.addMouseListener(l);
-		backPane.addMouseListener(l);
+		insidePane.addMouseListener(l);
 	}
 
 	@Override
 	public synchronized void addMouseMotionListener(MouseMotionListener l) {
-		glassPane.addMouseMotionListener(l);
-		backPane.addMouseMotionListener(l);
+		insidePane.addMouseMotionListener(l);
 	}
 
 	/**
 	 * Revalidates the content behind the glass pane
 	 */
 	public void revalidateBacking() {
-		backPane.revalidate();
-	}
-
-	/**
-	 * Sets whether or not this panel is editable. If the panel becomes
-	 * editable, then it will pull the focus from the widgets.
-	 *
-	 * @param editable whether or not the pane should be editable
-	 */
-	public void setEditable(boolean editable) {
-		this.editable = editable;
-
-		glassPane.setVisible(editable);
-		if (editable) {
-			glassPane.requestFocus();
-		}
-	}
-
-	/**
-	 * Returns whether or not this panel is editable.
-	 *
-	 * @return whether or not this panel is editable
-	 */
-	public boolean isEditable() {
-		return editable;
+		insidePane.revalidate();
 	}
 
 	/**
@@ -167,17 +149,18 @@ public class DashboardPanel extends JPanel {
 	 * Clears the panel of all of its data, and then reload it. This basically
 	 * starts the panel over from the beginning.
 	 */
-	public void clear() {
+	public void clear() {		
 		hiddenFields.clear();
 		fields.clear();
 		for (DisplayElement element : elements) {
 			disconnect(element);
-			backPane.remove(element);
+			insidePane.remove(element);
 		}
 		elements.clear();
-
-
-
+		
+		objectnexty = 0;
+		insidePane.setPreferredSize(new Dimension(getSize().width, objectnexty));
+		
 		table.removeTableListener(listener);
 		table.addTableListenerEx(listener, ITable.NOTIFY_IMMEDIATE | ITable.NOTIFY_LOCAL | ITable.NOTIFY_NEW | ITable.NOTIFY_UPDATE);
 		table.addSubTableListener(listener, true);
@@ -212,7 +195,7 @@ public class DashboardPanel extends JPanel {
 		hiddenFields.add(field);
 		if (elem != null) {
 			disconnect(elem);
-			backPane.remove(elem);
+			insidePane.remove(elem);
 			fields.remove(field);
 			elements.remove(elem);
 			repaint(elem.getBounds());
@@ -228,7 +211,7 @@ public class DashboardPanel extends JPanel {
 	 */
 	public void removeElement(StaticWidget widget) {
 		disconnect(widget);
-		backPane.remove(widget);
+		insidePane.remove(widget);
 		elements.remove(widget);
 		repaint(widget.getBounds());
 	}
@@ -245,9 +228,9 @@ public class DashboardPanel extends JPanel {
 		elements.remove(element);
 
 		for (DisplayElement e : elements) {
-			backPane.setComponentZOrder(e, count++);
+			insidePane.setComponentZOrder(e, count++);
 		}
-		backPane.setComponentZOrder(element, count);
+		insidePane.setComponentZOrder(element, count);
 
 		elements.add(element);
 
@@ -283,14 +266,14 @@ public class DashboardPanel extends JPanel {
 		}
 		element.setSavedLocation(point);
 
-		backPane.add(element);
+		insidePane.add(element);
 
 		// Put the new element in front (shift everything back first)
 		int count = 1;
 		for (DisplayElement e : elements) {
-			backPane.setComponentZOrder(e, count++);
+			insidePane.setComponentZOrder(e, count++);
 		}
-		backPane.setComponentZOrder(element, 0);
+		insidePane.setComponentZOrder(element, 0);
 
 		elements.addFirst(element);
 
@@ -421,62 +404,20 @@ public class DashboardPanel extends JPanel {
 		return null;
 	}
 	/**
-	 * Just a standard random
-	 */
-	private static final Random random = new Random();
-
-	/**
 	 * Finds a space to put the newest element, using its preferred size
 	 *
 	 * @param toPlace the element to place
 	 * @return the place where it should go
 	 */
 	private Point findSpace(DisplayElement toPlace) {
-		Stack<Point> positions = new Stack<Point>();
-		positions.add(new Point(0, 0));
-
+		Point rtn = new Point(0,objectnexty);
 		Dimension size = toPlace.getSize();
-		Dimension panelBounds = getSize();
 
-		PositionLoop:
-		while (!positions.isEmpty()) {
-			Point position = positions.pop();
-			Rectangle area = new Rectangle(position, size);
+		objectnexty += size.height + 5;
+		insidePane.setPreferredSize(new Dimension(getSize().width, objectnexty));
 
-			if (area.x < 0 || area.y < 0
-					|| area.x + area.width > panelBounds.width
-					|| area.y + area.height > panelBounds.height) {
-				continue;
-			}
-
-			for (DisplayElement element : elements) {
-				if (element != toPlace && element.isObstruction()) {
-					Rectangle bounds = element.getBounds();
-					// Test Intersection
-					if (!(bounds.x > area.x + area.width
-							|| bounds.x + bounds.width < area.x
-							|| bounds.y > area.y + area.height
-							|| bounds.y + bounds.height < area.y)) {
-						Point right = new Point(bounds.x + bounds.width + 1, position.y);
-						if (positions.isEmpty()) {
-							positions.add(right);
-							right = null;
-						}
-						positions.add(new Point(position.x, bounds.y + bounds.height + 1));
-						if (right != null && Math.abs(right.x - area.x) < area.width / 3) {
-							positions.add(right);
-						}
-						continue PositionLoop;
-					}
-				}
-			}
-
-			System.out.println("Adding an element at [" + position.x + "," + position.y + "]");
-			return position;
-		}
-
-		// If no space was found, jumble them at the beginning
-		return new Point(random.nextInt(32), random.nextInt(32));
+		System.out.println("Adding an element at [" + rtn.x + "," + rtn.y + "]");
+		return rtn;
 	}
 
 	/**
@@ -572,21 +513,20 @@ public class DashboardPanel extends JPanel {
 		public void layoutContainer(Container parent) {
 			if (parent == DashboardPanel.this) {
 				Dimension size = getSize();
-				glassPane.setBounds(0, 0, size.width, size.height);
-				backPane.setBounds(0, 0, size.width, size.height);
+				scrollPanel.setBounds(0, 0, size.width, size.height);
 			} else { // Back Pane
+				insidePane.setPreferredSize(new Dimension(getSize().width, objectnexty));
+				// For every element, reset the size
 				for (DisplayElement element : elements) {
 					element.setLocation(element.getSavedLocation());
 
 					Dimension savedSize = element.getSavedSize();
 					Dimension preferredSize = element.getPreferredSize();
 					Dimension size = new Dimension(preferredSize);
-					if (savedSize != null && savedSize.width != -1) {
+					if (savedSize != null && savedSize.width != -1)
 						size.width = savedSize.width;
-					}
-					if (savedSize != null && savedSize.height != -1) {
+					if (savedSize != null && savedSize.height != -1)
 						size.height = savedSize.height;
-					}
 
 					element.setSize(size);
 				}

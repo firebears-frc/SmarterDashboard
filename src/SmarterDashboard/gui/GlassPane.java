@@ -14,6 +14,10 @@ import SmarterDashboard.types.*;
  */
 public class GlassPane extends JPanel {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private static final int DRAG_BUFFER = 5;
 	private boolean dragging;
 	private Rectangle dragStartBounds;
@@ -476,6 +480,10 @@ public class GlassPane extends JPanel {
 
 	private class ChangeToAction extends AbstractAction {
 
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 		Class<? extends Widget> elementClass;
 
 		private ChangeToAction(String string, Class<? extends Widget> elementClass) {
@@ -499,6 +507,11 @@ public class GlassPane extends JPanel {
 
 	private class MoveToBackAction extends AbstractAction {
 
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
 		private MoveToBackAction(String string) {
 			super(string);
 		}
@@ -509,6 +522,11 @@ public class GlassPane extends JPanel {
 	}
 
 	private class ResetSizeAction extends AbstractAction {
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 
 		private ResetSizeAction() {
 			super("Reset Size");
@@ -526,6 +544,11 @@ public class GlassPane extends JPanel {
 	 */
 	private class PropertiesItemAction extends AbstractAction {
 
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
 		private PropertiesItemAction(String string) {
 			super(string);
 		}
@@ -536,6 +559,11 @@ public class GlassPane extends JPanel {
 	}
 
 	private class DeleteItemAction extends AbstractAction {
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 
 		public DeleteItemAction() {
 			super("Remove");

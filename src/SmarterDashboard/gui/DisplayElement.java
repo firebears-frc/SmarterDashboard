@@ -16,6 +16,10 @@ import SmarterDashboard.properties.*;
  */
 public abstract class DisplayElement extends JPanel implements PropertyHolder {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	/** The point that the element was saved at or should save to */
 	private Point savedLocation = new Point(0, 0);
 	/** The saved dimension, -1 means the preferred dimension should be used */

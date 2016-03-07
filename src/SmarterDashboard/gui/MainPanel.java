@@ -5,8 +5,6 @@
 package SmarterDashboard.gui;
 
 import java.awt.LayoutManager;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import javax.swing.JPanel;
 
@@ -17,7 +15,11 @@ import javax.swing.JPanel;
  */
 public final class MainPanel extends JPanel {
     
-    public static final HashMap<String, DashboardPanel> panels = new HashMap();
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	public static final HashMap<String, DashboardPanel> panels = new HashMap<String, DashboardPanel>();
     private static DashboardPanel currentPanel;
     
     public MainPanel(LayoutManager layout, DashboardPanel defaultPanel, DashboardPanel... panels) {

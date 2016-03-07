@@ -30,6 +30,7 @@ public class RobotPreferences extends StaticWidget implements ITableListener {
 
 	@Override
 	public void init() {
+		super.init();
 		add = new JButton("Add");
 		add.addActionListener(new ActionListener() {
 
@@ -84,7 +85,7 @@ public class RobotPreferences extends StaticWidget implements ITableListener {
 		add(tableScrollPane, BorderLayout.CENTER);
 		add(controlPanel, BorderLayout.SOUTH);
 		
-		setPreferredSize(new Dimension(600, 400));
+		
 	}
 
 	@Override
