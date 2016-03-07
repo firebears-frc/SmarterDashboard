@@ -2,22 +2,10 @@ package SmarterDashboard.gui;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.io.*;
-import java.util.*;
-import java.util.List;
-
 import javax.swing.*;
 
 import SmarterDashboard.*;
-import SmarterDashboard.gui.elements.bindings.AbstractTableWidget;
-import SmarterDashboard.livewindow.elements.LWSubsystem;
-import SmarterDashboard.properties.*;
 import SmarterDashboard.robot.Robot;
-import SmarterDashboard.types.*;
-import edu.wpi.first.wpilibj.networktables.NetworkTable;
-import edu.wpi.first.wpilibj.tables.ITable;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * This class defines the main window for the FRC program. It contains almost no
@@ -28,12 +16,10 @@ import java.util.logging.Logger;
  */
 public class DashboardFrame extends JFrame {
 
-	/*
-	 * If the menu bar is set to "hidden," then this defines what portion of the
-	 * top screen is reserved for revealing the menu bar when the mouse moves
-	 * over it
+	/**
+	 * 
 	 */
-	private static final int MENU_HEADER = 10;
+	private static final long serialVersionUID = 1L;
 	/** The size the frame should be when displayed on the netbook */
 	private static final Dimension NETBOOK_SIZE = new Dimension(1024, 400);
 	/** The minimum size of the frame */
@@ -52,13 +38,12 @@ public class DashboardFrame extends JFrame {
 	private final DashboardPanel smarterDashboardPanel;
 	private final DashboardPanel liveWindowPanel;
 	private final MainPanel mainPanel;
-	private DisplayMode displayMode = DisplayMode.SMARTER_DASHBOARD;
 	/** The menu bar */
 	private final JMenuBar menuBar;
+	/** Notify bar */
+	private final JTextField notifyBar;
 	/** The property table (there is only this one ever) */
 	private final PropertyEditor propEditor;
-	
-	private static final String LW_SAVE = "_"+Robot.getLiveWindow().getSubTable("~STATUS~").getString("Robot", PANEL_LIVE_WINDOW)+".xml";
 	
 	private final LogToCSV logger = new LogToCSV(this);
 		 
@@ -89,9 +74,13 @@ public class DashboardFrame extends JFrame {
 		setDisplayMode(DisplayMode.SMARTER_DASHBOARD);
 		menuBar = new DashboardMenu(this, mainPanel);
 		propEditor = new PropertyEditor(this);
+		//
+		notifyBar = new JTextField("Initialized Smarter Dashboard!");
+		notifyBar.setEditable(false);
 
 		add(menuBar, BorderLayout.NORTH);
 		add(mainPanel, BorderLayout.CENTER);
+		add(notifyBar, BorderLayout.SOUTH);
 
 		// Set the size / look
 		if (competition) {
@@ -148,7 +137,6 @@ public class DashboardFrame extends JFrame {
 	 * @param mode The mode to put the frame into.
 	 */
 	public final void setDisplayMode(DisplayMode mode) {
-		displayMode = mode;
 		CardLayout cl = (CardLayout)(mainPanel.getLayout());
 		cl.show(mainPanel, mode.toString());
 	}
@@ -182,5 +170,9 @@ public class DashboardFrame extends JFrame {
 
 	public LogToCSV getLogger() {
 		return logger;
+	}
+	
+	public void notify(String toprint) {
+		notifyBar.setText(toprint);
 	}
 }

@@ -2,6 +2,8 @@ package SmarterDashboard.gui;
 
 import edu.wpi.first.wpilibj.tables.ITable;
 import edu.wpi.first.wpilibj.tables.ITableListener;
+
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -42,9 +44,7 @@ public class DashboardMenu extends JMenuBar {
 		newMenu.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, KeyEvent.CTRL_DOWN_MASK));
 		newMenu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				mainPanel.getPanel(
-					DashboardFrame.PANEL_SMARTER_DASHBOARD)
-						.clear();
+				mainPanel.getPanel(DashboardFrame.PANEL_SMARTER_DASHBOARD).clear();
 			}
 		});
 		fileMenu.add(newMenu);

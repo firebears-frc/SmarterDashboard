@@ -13,7 +13,12 @@ import SmarterDashboard.types.*;
  * @author brad (Heavily modified by Alex Henning)
  */
 public class ProgressBar extends AbstractValueWidget {
-    public static final DataType[] TYPES = {DataType.NUMBER};
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public static final DataType[] TYPES = {DataType.NUMBER};
 
     public final ColorProperty foreground = new ColorProperty(this, "Foreground");
     public final ColorProperty background = new ColorProperty(this, "Background");

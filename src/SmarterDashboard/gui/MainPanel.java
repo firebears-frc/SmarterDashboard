@@ -4,6 +4,7 @@
  */
 package SmarterDashboard.gui;
 
+import java.awt.Color;
 import java.awt.LayoutManager;
 import java.util.HashMap;
 import javax.swing.JPanel;

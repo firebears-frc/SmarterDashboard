@@ -13,7 +13,11 @@ import SmarterDashboard.types.*;
  */
 public class TextBox extends AbstractValueWidget {
 
-    public static final DataType[] TYPES = {DataType.BASIC};
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	public static final DataType[] TYPES = {DataType.BASIC};
     public static final String NAME = "Text Box";
     
     public final BooleanProperty editable = new BooleanProperty(this, "Editable", true);

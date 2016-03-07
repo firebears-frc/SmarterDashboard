@@ -322,7 +322,8 @@ public class DashboardPanel extends JPanel {
 	 * @param key the key to add
 	 */
 	public void addField(String key) {
-		setField(key, null, table.containsKey(key) ? table.getValue(key) : null, null);
+		// TODO: Test to see if adding ",0" does anything
+		setField(key, null, table.containsKey(key) ? table.getValue(key, 0) : null, null);
 	}
 
 	/**
@@ -416,7 +417,7 @@ public class DashboardPanel extends JPanel {
 		objectnexty += size.height + 5;
 		insidePane.setPreferredSize(new Dimension(getSize().width, objectnexty));
 
-		System.out.println("Adding an element at [" + rtn.x + "," + rtn.y + "]");
+		DashboardFrame.getInstance().notify("Added an element at (" + rtn.x + "," + rtn.y + ")");
 		return rtn;
 	}
 
@@ -456,15 +457,17 @@ public class DashboardPanel extends JPanel {
 					if (value instanceof ITable) {
 						final ITable table = (ITable) value;
 						table.addTableListenerEx("~TYPE~", new ITableListener() {
-							public void valueChanged(final ITable typeSource, final String typeKey, final Object typeValue, final boolean typeIsNew) {
-								table.removeTableListener(this);
-								SwingUtilities.invokeLater(new Runnable() {
-									public void run() {
-										setField(key, null, value, null);
-									}
-								});
-							}
-						}, ITable.NOTIFY_IMMEDIATE | ITable.NOTIFY_LOCAL | ITable.NOTIFY_NEW | ITable.NOTIFY_UPDATE);
+								public void valueChanged(final ITable typeSource, final String typeKey, final Object typeValue, final boolean typeIsNew) {
+									table.removeTableListener(this);
+									SwingUtilities.invokeLater(new Runnable() {
+										public void run() {
+											setField(key, null, value, null);
+										}
+									});
+								}
+							},
+							ITable.NOTIFY_IMMEDIATE | ITable.NOTIFY_LOCAL | ITable.NOTIFY_NEW | ITable.NOTIFY_UPDATE
+						);
 					} else {
 						SwingUtilities.invokeLater(new Runnable() {
 							public void run() {
